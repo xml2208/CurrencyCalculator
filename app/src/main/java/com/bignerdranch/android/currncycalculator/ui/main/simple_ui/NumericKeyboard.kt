@@ -1,4 +1,4 @@
-package com.bignerdranch.android.currncycalculator.ui
+package com.bignerdranch.android.currncycalculator.ui.main.simple_ui
 
 import android.content.Context
 import android.util.AttributeSet
@@ -19,7 +19,7 @@ class NumericKeyboard @JvmOverloads constructor(
     private lateinit var inputConnection: InputConnection
 
     init {
-        val binding = KeyboardBinding.inflate(LayoutInflater.from(context), this)
+       val binding  = KeyboardBinding.inflate(LayoutInflater.from(context), this)
 
         binding.key1.setOnClickListener(::onClick)
         binding.key2.setOnClickListener(::onClick)
@@ -53,7 +53,6 @@ class NumericKeyboard @JvmOverloads constructor(
             commitText("", 1)
         }
     }
-
 
     fun setUpInputConnection(ic: InputConnection) {
         this.inputConnection = ic

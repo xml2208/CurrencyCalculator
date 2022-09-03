@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.entry.EntryActivity">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:id="@+id/compose_ui_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Compose UI"/>
+
+        <Button
+            android:id="@+id/simple_ui_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="simple UI"
+            android:layout_below="@+id/compose_ui_button"/>
+    </RelativeLayout>
+</RelativeLayout>
