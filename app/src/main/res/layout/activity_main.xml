@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white_"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -18,14 +18,13 @@
         android:background="@drawable/main_bg"
         android:orientation="vertical"
         android:padding="20dp"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.main.simple_ui.MainActivity">
 
         <RelativeLayout
             android:id="@+id/first_converter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
 
             <TextView
                 android:id="@+id/currency_name"
@@ -34,13 +33,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="13dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="0dp"
-                android:layout_toEndOf="@+id/imageView"
-                android:text="USD"
-                android:textColor="@color/white"
+                android:layout_toEndOf="@+id/image_origin"
+                android:textColor="@color/input_amount"
                 android:textSize="19sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="usd" />
 
             <TextView
                 android:id="@+id/currencyRate"
@@ -48,47 +47,40 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/currency_name"
                 android:layout_marginStart="13dp"
-                android:layout_toEndOf="@+id/imageView"
+                android:layout_toEndOf="@+id/image_origin"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
                 tools:text="1 eur - .. uzs" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_origin"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/currency" />
+
         </RelativeLayout>
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/first_converter"
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="25dp"
+            android:autofillHints="amount"
             android:background="@null"
+            android:inputType="numberDecimal"
+            android:maxLines="1"
             android:minHeight="48dp"
+            android:textColor="@color/input_amount"
             android:textCursorDrawable="@drawable/edit_text"
-            android:textSize="30sp"
+            android:textSize="28sp"
             tools:text="diffed" />
-
-        <TextView
-            android:id="@+id/convert_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/editText"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="73dp"
-            android:layout_marginBottom="0dp"
-            android:background="@color/grey"
-            android:text="@string/convert"
-            android:textSize="20sp" />
 
         <View
             android:id="@+id/divider"
@@ -98,7 +90,8 @@
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="18dp"
-            android:background="?android:attr/listDivider" />
+            android:background="?android:attr/listDivider"
+            android:backgroundTint="@color/grey" />
 
         <ImageButton
             android:id="@+id/swap_btn"
@@ -107,6 +100,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@drawable/round_corner"
+            android:contentDescription="swap"
             android:minWidth="48dp"
             android:minHeight="48dp"
             android:padding="5dp"
@@ -123,31 +117,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
-                android:layout_marginTop="18dp"
-                android:layout_toEndOf="@+id/imageView2"
-                android:text="UZS"
-                android:textColor="@color/white"
+                android:layout_marginTop="23dp"
+                android:layout_toEndOf="@+id/image_result"
+                android:textColor="@color/input_amount"
                 android:textSize="19sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="uzs" />
 
             <TextView
                 android:id="@+id/currencyRate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/currency_name2"
-                android:layout_marginStart="15dp"
-                android:layout_toEndOf="@+id/imageView2"
+                android:layout_marginStart="13dp"
+                android:layout_toEndOf="@+id/image_result"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
                 tools:text="1 UZS - .. EUR" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/image_result"
                 android:layout_width="65dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="18dp"
-                android:src="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/currency" />
+
+
         </RelativeLayout>
 
         <TextView
@@ -162,7 +158,7 @@
             tools:text="56799567" />
     </RelativeLayout>
 
-    <com.bignerdranch.android.currncycalculator.ui.NumericKeyboard
+    <com.bignerdranch.android.currncycalculator.ui.main.simple_ui.NumericKeyboard
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

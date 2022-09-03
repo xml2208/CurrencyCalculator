@@ -1,61 +1,74 @@
 package com.bignerdranch.android.currncycalculator.model
 
+import android.util.Log
 import androidx.lifecycle.*
+import com.bignerdranch.android.currncycalculator.R
 import com.bignerdranch.android.currncycalculator.network.CurrencyApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
-import java.lang.IllegalArgumentException
-
-const val ACCESS_KEY = "df80c136dc0191112bdeb99b5ade88be84ad481a"
+import java.math.BigDecimal
+import kotlin.String as String
 
 class CurrencyViewModel : ViewModel() {
 
-    private val _originCurrency = MutableLiveData("USD")
-    private val _resultCurrency = MutableLiveData("UZS")
-    private val _originRate = MutableLiveData("")
-    private val _resultRate = MutableLiveData(" ")
-    private val _result = MutableLiveData("0.0")
+    private var _originCurrency = MutableStateFlow("usd")
+    private val _resultCurrency = MutableStateFlow("uzs")
+    private val _originRate = MutableStateFlow(BigDecimal.ONE)
+    private val _resultRate = MutableStateFlow(BigDecimal.ONE)
+    private val _result = MutableStateFlow("")
+    private val _originImg = MutableStateFlow(R.drawable.us)
+    private val _resultImg = MutableStateFlow(R.drawable.images)
 
-    val originCurrency: LiveData<String> = _originCurrency
-    val resultCurrency: LiveData<String> = _resultCurrency
-    val originRate: LiveData<String> = _originRate
-    val resultRate: LiveData<String> = _resultRate
-    val resultAmount: LiveData<String> get() = _result
+    val originCurrency = _originCurrency.asStateFlow()
+    var resultCurrency = _resultCurrency.asStateFlow()
+    val originRate = _originRate.asStateFlow()
+    val resultRate = _resultRate.asStateFlow()
+    val resultAmount = _result.asStateFlow()
+    val originImg = _originImg.asStateFlow()
+    val resultImg = _resultImg.asStateFlow()
 
+    fun onListItemClick(isOrigin:Boolean, item: Currency) {
+       if (isOrigin) {
+           _originCurrency.value = item.iso
+           _originImg.value = item.icon
+           calculate()
+       }
+        else {
+            _resultCurrency.value = item.iso
+           _resultImg.value = item.icon
+           calculate()
+       }
+    }
+
+    fun calculate() {
+        viewModelScope.launch {
+            try {
+                val originRateResponse = CurrencyApi.retrofitService.convertCurrency(_originCurrency.value)
+                val currencyRates = originRateResponse[_originCurrency.value] as? Map<String, Double>
+                _originRate.value = currencyRates?.get(_resultCurrency.value)?.toString()?.toBigDecimal()
+
+                val resultRateResponse = CurrencyApi.retrofitService.convertCurrency(_resultCurrency.value)
+                val currencyRates2 = resultRateResponse[_resultCurrency.value] as? Map<String, Double>
+                _resultRate.value = currencyRates2?.get(_originCurrency.value)?.toString()?.toBigDecimal()
+
+            } catch (e: Exception) {
+                Log.d("TAG", "$e")
+            }
+        }
+    }
 
     fun onSwap() {
         val temp = _originCurrency.value
         _originCurrency.value = _resultCurrency.value
         _resultCurrency.value = temp
-    }
 
-    fun getConvertedData(accessKey: String, from: String, to: String, amount: Double) {
-        viewModelScope.launch {
-            try {
-                val originRateResponse = CurrencyApi.retrofitService.convertCurrency(ACCESS_KEY, "${_originCurrency.value}", "${_resultCurrency.value}", 1.0)
-                _originRate.value = originRateResponse.rates.values.first().rate
+        val tempRate = _originRate.value
+        _originRate.value = _resultRate.value
+        _resultRate.value = tempRate
 
-                val resultRateResponse = CurrencyApi.retrofitService.convertCurrency(ACCESS_KEY, "${_resultCurrency.value}", "${_originCurrency.value}", 1.0)
-                _resultRate.value = resultRateResponse.rates.values.first().rate
-
-                val responseResult = CurrencyApi.retrofitService.convertCurrency(accessKey, from, to, amount)
-                _result.value = responseResult.rates.values.first().rate_for_amount.toString()
-            } catch (e: Exception) {
-
-            }
-        }
+        val tepImg = _originImg.value
+        _originImg.value = _resultImg.value
+        _resultImg.value = tepImg
     }
 }
-
-class ViewModelFactory : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CurrencyViewModel::class.java)) {
-            return CurrencyViewModel() as T
-        }
-        throw IllegalArgumentException("Unknown viewModel")
-    }
-
-}
-
-
-

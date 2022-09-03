@@ -1,0 +1,14 @@
+[
+  {
+    "iso": "usd",
+    "icon_url": "https://hatscripts.github.io/circle-flags/flags/us.svg"
+  },
+  {
+    "iso": "eur",
+    "icon_url": "https://hatscripts.github.io/circle-flags/flags/european_union.svg"
+  },
+  {
+    "iso": "rub",
+    "icon_url": "https://hatscripts.github.io/circle-flags/flags/uz.svg"
+  }
+]
