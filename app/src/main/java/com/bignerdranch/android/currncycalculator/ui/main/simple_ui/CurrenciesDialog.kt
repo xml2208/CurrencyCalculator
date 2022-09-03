@@ -88,49 +88,6 @@ class CurrenciesDialog(private var isOrigin: Boolean) : DialogFragment() {
 }
 
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        val ctx = requireContext()
-//        val rv = RecyclerView(ctx).also {
-//            it.layoutManager = LinearLayoutManager(ctx)
-//            it.adapter = CurrencyAdapter()
-//            it.layoutParams = ViewGroup.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            )
-//        }
-//        return FrameLayout(ctx).also {
-//            it.addView(rv)
-//        }
-//    }
-//}
-//
-//private class CurrencyAdapter() : RecyclerView.Adapter<CurrencyViewHolder>() {
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
-//        val view =
-//            ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        return CurrencyViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-//
-//    }
-//
-//    override fun getItemCount(): Int = 0
-//
-//}
-//
-//class CurrencyViewHolder(private val binding: ItemViewBinding) :
-//    RecyclerView.ViewHolder(binding.root) {
-//    fun bind() {
-//
-//    }
-
-
 
 
 
