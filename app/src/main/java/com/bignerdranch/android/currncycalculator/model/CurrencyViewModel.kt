@@ -1,14 +1,14 @@
 package com.bignerdranch.android.currncycalculator.model
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.currncycalculator.R
 import com.bignerdranch.android.currncycalculator.network.CurrencyApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
-import kotlin.String as String
 
 class CurrencyViewModel : ViewModel() {
 
@@ -18,7 +18,7 @@ class CurrencyViewModel : ViewModel() {
     private val _resultRate = MutableStateFlow(BigDecimal.ONE)
     private val _result = MutableStateFlow("")
     private val _originImg = MutableStateFlow(R.drawable.us)
-    private val _resultImg = MutableStateFlow(R.drawable.images)
+    private val _resultImg = MutableStateFlow(R.drawable.icon_uzb)
 
     val originCurrency = _originCurrency.asStateFlow()
     var resultCurrency = _resultCurrency.asStateFlow()
@@ -28,29 +28,35 @@ class CurrencyViewModel : ViewModel() {
     val originImg = _originImg.asStateFlow()
     val resultImg = _resultImg.asStateFlow()
 
-    fun onListItemClick(isOrigin:Boolean, item: Currency) {
-       if (isOrigin) {
-           _originCurrency.value = item.iso
-           _originImg.value = item.icon
-           calculate()
-       }
-        else {
+    fun onListItemClick(isOrigin: Boolean, item: Currency) {
+        if (isOrigin) {
+            _originCurrency.value = item.iso
+            _originImg.value = item.icon
+            calculate()
+        } else {
             _resultCurrency.value = item.iso
-           _resultImg.value = item.icon
-           calculate()
-       }
+            _resultImg.value = item.icon
+            calculate()
+        }
+        calculate()
     }
 
     fun calculate() {
         viewModelScope.launch {
             try {
-                val originRateResponse = CurrencyApi.retrofitService.convertCurrency(_originCurrency.value)
-                val currencyRates = originRateResponse[_originCurrency.value] as? Map<String, Double>
-                _originRate.value = currencyRates?.get(_resultCurrency.value)?.toString()?.toBigDecimal()
+                val originRateResponse =
+                    CurrencyApi.retrofitService.convertCurrency(_originCurrency.value)
+                val currencyRates =
+                    originRateResponse[_originCurrency.value] as? Map<String, Double>
+                _originRate.value =
+                    currencyRates?.get(_resultCurrency.value)?.toString()?.toBigDecimal()
 
-                val resultRateResponse = CurrencyApi.retrofitService.convertCurrency(_resultCurrency.value)
-                val currencyRates2 = resultRateResponse[_resultCurrency.value] as? Map<String, Double>
-                _resultRate.value = currencyRates2?.get(_originCurrency.value)?.toString()?.toBigDecimal()
+                val resultRateResponse =
+                    CurrencyApi.retrofitService.convertCurrency(_resultCurrency.value)
+                val currencyRates2 =
+                    resultRateResponse[_resultCurrency.value] as? Map<String, Double>
+                _resultRate.value =
+                    currencyRates2?.get(_originCurrency.value)?.toString()?.toBigDecimal()
 
             } catch (e: Exception) {
                 Log.d("TAG", "$e")
