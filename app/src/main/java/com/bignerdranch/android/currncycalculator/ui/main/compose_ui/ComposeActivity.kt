@@ -68,7 +68,8 @@ fun MyApp(
 ) {
     Column(Modifier.background(colorResource(id = R.color.white_))) {
         var inputText by rememberSaveable { mutableStateOf("0") }
-        val formattedInput = remember(inputText) { mutableStateOf(formatAmount(inputText).replace(",", " ")) }
+        val formattedInput =
+            remember(inputText) { mutableStateOf(formatAmount(inputText).replace(",", " ")) }
         val showDialog = rememberSaveable { mutableStateOf(false) }
         val isOrigin = rememberSaveable { mutableStateOf(false) }
 
@@ -107,7 +108,8 @@ fun MyApp(
                 }
             }
             Text(
-                text = formatAmount(calculateResult(inputText, originRateResult)).replace(",", " "), fontSize = 25.sp,
+                text = formatAmount(calculateResult(inputText, originRateResult)).replace(",", " "),
+                fontSize = 25.sp,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
                     .padding(bottom = 30.dp, start = 30.dp),
@@ -247,7 +249,7 @@ fun calculateResult(inputString: String, originRate: String): String {
 val String.isValidAmount get(): Boolean = isNotBlank()
 fun formatAmount(input: String): String =
     if (input.isValidAmount) {
-            DecimalFormat("#,###,###").format(input.toDouble())
+        DecimalFormat("#,###,###").format(input.toDouble())
     } else {
         input
     }

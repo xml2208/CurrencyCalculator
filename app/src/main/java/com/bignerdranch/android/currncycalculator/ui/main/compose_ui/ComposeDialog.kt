@@ -18,7 +18,7 @@ import com.bignerdranch.android.currncycalculator.model.Currencies
 import com.bignerdranch.android.currncycalculator.model.Currency
 import com.bignerdranch.android.currncycalculator.model.currencyList
 
-private val currencies: Currencies by lazy { currencyList() }
+private val currencies: Currencies by lazy {  currencyList() }
 @Composable
 fun ComposeDialog(isOrigin: Boolean, onDismiss: () -> Unit) {
     val vm: ComposeViewModel = viewModel()

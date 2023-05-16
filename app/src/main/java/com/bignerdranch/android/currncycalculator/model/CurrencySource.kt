@@ -7,5 +7,6 @@ fun currencyList() = mutableListOf(
         Currency("uzs", R.drawable.icon_uzb),
         Currency("eur", R.drawable.europe),
         Currency("rub", R.drawable.russia),
-        Currency("cad", R.drawable.canada)
+        Currency("cad", R.drawable.canada),
+        Currency("cny", R.drawable.ic_china)
     )
